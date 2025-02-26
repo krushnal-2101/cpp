@@ -31,14 +31,19 @@ int main(){
         cout << "your grade is D" << endl;
         grade='D';
     }
-    else if(marks > 45)
+    else if(marks > 35)
     {
         cout << "your grade is E" << endl;
         grade='E';
     }
+    else if(marks < 35)
+    {
+        cout << "your fail" << endl;
+        grade='F';
+    }
     else
     {
-        cout << "check your input" << endl;
+        cout << "check your result" << endl;
        
     }
     cout << "-------------------------" <<  endl;
@@ -55,7 +60,9 @@ int main(){
           break;
        case 'E':cout << "normal pass " << endl;
            break;
-        default : cout << "better luck next time...! " << endl;
+       case 'F':cout << "goodluck" << endl;
+           break;
+        default : cout << "" << endl;
     }
 
     cout << "-------------------------" <<  endl;
