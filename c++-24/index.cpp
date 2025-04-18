@@ -13,14 +13,14 @@ class animal{
 
 
     animal(){
-        strcpy(this->name,"-");
-        strcpy(this->breed,"-");
+        strcpy(this->name, "-");
+        strcpy(this->breed, "-");
         this->age = 0;
-        strcpy(this->type,"dog");
+        strcpy(this->type, "dog");
         cout <<  "dogieeeeee" <<  endl;
     }
 
-    animal(char n)
+    animal(char n[])
     {
         strcpy(this->type, n);
     }
@@ -32,6 +32,7 @@ int main(){
 
      animal dog1,cheetah("run"),lion("king"),whale("fish");
 
+     int a=100;
 
      cout <<  dog1.type <<  endl;
      cout <<  cheetah.type <<  endl;
