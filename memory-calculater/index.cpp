@@ -1,78 +1,119 @@
 #include<iostream>
-#include<string.h>
+#include<string>
 #include<vector>
 using namespace std;
 
-template <typename T>
+// template <typename T>
 
 class student{
 
     public:
-    T id;
+    int id;
     string name;
 
-    student(T id, char name)
+    student(int id, string name)
     {
       this->id = id;
       this->name = name;
     }
+};
 
-    void show()
-    { 
-        cout <<  "id:" <<  id <<  "Name:" <<  name <<  endl;
-    }
-}
+class Studentlist{
 
+      public:
 
-int main
+       vector<student> list;
+      
+       void add(int id ,string name)
+       {
+             student st(id, name);
+              list.push_back(st);
+       }
+
+       void display(){
+            for(student s : list)
+            {
+                  cout <<  "ID:" << s.id <<  " "<<  "NAME:" <<  s.name <<  endl;
+            }
+       }
+
+       void search(int id ){
+        for(student s : list)
+            {
+                if(s.id == id)
+                {
+                    cout <<  "student on ID:" << " "<< id <<  "NAME:" <<  s.name <<  endl;
+                }
+            }
+      }
+
+       void removeid()
+      {
+         int id;
+         cout << "Enter ID to remove: ";
+         cin >> id;
+           for(int i = 0; i <  list.size(); i++)
+           {
+             if(list[i].id == id)
+             {
+              list.erase(list.begin() +1);
+                  cout << "Student removed successfully." << endl;
+                  return;
+             }
+           }
+      }
+};
+
+int main()
 {
-    student std(1,"jay"), std(2,"jay");
-  
-    vector<student<int>> list;
 
-    int choice;
-   cout << "choice:";
-   cin >>  choice;
+    int choice, id;     
+    string name;
 
+ 
+      Studentlist list;
 
-    list.push_back(1,"jay");
-    list.push_back(2,"mit");
-
-//    .show();
-
- while(choice != 0){
-      cout << "-------------------------" <<  endl;
-      cout <<  "add student" <<  endl;
-      cout <<  "display list" <<  endl;
-      cout <<  "remove student" <<  endl;
-      cout <<  "search student" <<  endl;
-
+ while(choice != 0)
+ {
+      cout <<  "press 1 for add student" <<  endl;
+      cout <<  "press 2 for display student list" <<  endl;
+      cout <<  "press 3 for remove student id" <<  endl;
+      cout <<  "press 4 for search student id" <<  endl;
+        cout << "choice:";
+        cin >>  choice; 
 
 switch(choice)
 {
 
-  case 1: 
-          
+  case 1: cout << "id:";
+          cin >>  id;
+          cout <<  "name:";
+          cin >>  name;
+          list.add(id, name);
         break;
 
-  case 1:
-
-        break;
-
-  case 1: 
-
-        break;
-
-  case 1: 
-
+  case 2:
+            list.display();
         break;
         
+ case 3: 
+       
+        list.removeid();
+        break;
+
+  case 4: 
+      cout << "id: ";
+      cin >>  id;
+      list.search(id);
+        break;
+
+ 
   default: 
-  
+        cout << "invalid choice----!" ;
         break;
 
 }
- }
+ }        
 
 
     
