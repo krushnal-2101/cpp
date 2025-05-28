@@ -1,99 +1,236 @@
-#include<iostream>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-void print_array(int arr[], int n){
-for(int i=0; i<n; i++)
+// Selection Sort
+void selectionSort(vector<int>& arr) 
 {
-    cout <<  arr[i] << " ";
-}
-    cout <<  endl;
-}
+    int n = arr.size();
 
-
-void selection(int arr[], int n)
-{
-   
-    for(int i=0; i<n-1; i++ )
+    for(int i = 0; i < n - 1; ++i) 
     {
-        int min_index = i;
+        int minIndex = i;
 
-        for(int j=i+1; j<n; j++)
-        {
-            if(arr[j]<arr[min_index])
+        for(int j = i + 1; j < n; j++)
+            if(arr[j] < arr[minIndex])
             {
-                min_index = j;
+                minIndex = j;
             }
-        }
+            swap(arr[i], arr[minIndex]);
+    }
+}
 
-        int temp = arr[min_index];
-        arr[min_index] = arr[i];
-        arr[i] = temp;
+// Merge Sort 
+void merge(vector<int> &a, int low, int mid, int high)
+{
+    vector<int> temp;
+    int left = low;
+    int right = mid+1;
+
+
+    while(left <= mid && right <= high)
+    {
+        if(a[left] <= a[right])
+        {
+            temp.push_back(a[left]);
+            left++;
+        }
+     else{
+       temp.push_back(a[right]);
+       right++; 
+        }
+    }
+  
+
+    while(left <= mid)
+    {
+        temp.push_back(a[left]);
+        left++;
     }
 
-    print_array(arr, n);
+    while(right <= high)
+    {
+        temp.push_back(a[right]);
+        right++;
+    }
+
+
+    for(int i=low; i<=high; i++)
+    {
+        a[i] = temp[i-low];
+    }
+
 }
 
 
 
+void merge_sort(vector<int> &a, int low, int high){
 
-
-int main()
-{
-
-
-    int choice, size, ele ;
-
-    cout << "size: ";
-    cin >>  size;
-
-    int arr[size];
-
-    for(int i=0; i<size; i++)
+    if(low >= high)
     {
-        cout << "arr[" << i << "]: " << endl;
-        cin >> arr[i];
+        return;
     }
     
+    int mid = (low+high) / 2;
 
-while(choice != 0)
+    merge_sort(a, low, mid);
+
+    merge_sort(a, mid+1, high);
+
+    merge(a, low, mid, high);
+}
+
+
+// Linear Search
+int linearSearch(vector<int>& arr, int search) 
 {
-  
-    cout << "selection short" <<  endl;
-    cout <<  "merge short" <<  endl;
-    cout <<  "linear search" <<  endl;
-    cout << "binary search" <<  endl;
+    for(int i = 0; i < arr.size(); ++i)
 
-    cout <<  "choice:";
-    cin >>  choice;
-
-    switch(choice)
-    {
-    case 1:
-           
-            cout <<  "ele: ";
-            cin >>  ele;
-          selection(arr, n);
-          break;
-    case 2:
-           
- 
-          break;
-    case 3:
-           
- 
-          break;
-
-    case 4:
-           
+        if(arr[i] == search)
+        {
+            return i;
+        }
             
-          break;
-
-   default:
-
-    break;
+    return -1;
 }
 
+// Binary Search 
+int binarySearch(vector<int>& arr, int search) 
+{
+    int low = 0, high = arr.size() - 1;
+
+    while(low <= high) 
+    {
+        int mid = (low + high) / 2;
+
+        if(arr[mid] == search)
+        {
+          return mid;  
+        } 
+        else if(arr[mid] < search) 
+        {
+         low = mid + 1;   
+        }
+        else {
+          high = mid - 1;  
+        }
+    }
+    return -1;
 }
 
-return 0;
+// Display Array
+void printArray(vector<int>& arr) 
+{
+    for(int num : arr)
+    {
+       cout << num << " "; 
+    }
+    cout << endl;
+}
+
+int main() {
+   
+    int choice;
+
+    while(choice != 5) {
+        cout << endl << "--- MENU ---" << endl;
+        cout << "1. Selection Sort" << endl;
+        cout << "2. Merge Sort" << endl;
+        cout << "3. Linear Search" << endl;
+        cout << "4. Binary Search" << endl;
+        cout << "5. Exit" << endl;
+
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        vector<int> arr;
+        int n, x ;
+
+        switch(choice) {
+               case 1: {
+                cout << "Enter number of elements: ";
+                cin >> n;
+                cout << "Enter elements: ";
+                for (int i = 0; i < n; i++) 
+                {
+                    cin >> n;
+                    arr.push_back(n);
+                }
+
+                selectionSort(arr);
+                cout << "Sorted array (Selection Sort): ";
+                printArray(arr);
+                break;
+            }
+
+            case 2: {
+                cout << "Enter number of elements: ";
+                cin >> n;
+                cout << "Enter elements: ";
+                for (int i = 0; i < n; i++) 
+                {
+                    cin >> n;
+                    arr.push_back(n);
+                }
+
+                merge_sort(arr, 0, n - 1);
+                cout << "Sorted array (Merge Sort): ";
+                printArray(arr);
+                break;
+            }
+
+            case 3: {
+                cout << "Enter number of elements: ";
+                cin >> n;
+                cout << "Enter elements: ";
+                for (int i = 0; i < n; i++) {
+                    cin >> x;
+                    arr.push_back(x);
+                }
+
+                cout << "Enter value to search: ";
+                cin >> x;
+
+                int index = linearSearch(arr, x);
+                if (index != -1)
+                    cout << "Element found at index: " << index << endl;
+                else
+                    cout << "Element not found." << endl;
+                break;
+            }
+
+            case 4: {
+                cout << "Enter number of elements: ";
+                cin >> n;
+                cout << "Enter sorted elements: ";
+                for (int i = 0; i < n; i++) 
+                {
+                    cin >> x;
+                    arr.push_back(x);
+                }
+
+                cout << "Enter value to search: ";
+                cin >> x;
+
+                int index = binarySearch(arr, x);
+
+                if (index != -1){
+                    cout << "Element found at index: " << index << endl;
+                }
+                else{
+                    cout << "Element not found." << endl;
+                }
+                  
+                break;
+            }
+
+            case 5:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Try again." << endl;
+        }
+    }
+
+    return 0;
 }
